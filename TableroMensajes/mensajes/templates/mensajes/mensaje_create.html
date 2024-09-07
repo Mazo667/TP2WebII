@@ -1,0 +1,25 @@
+{% extends 'mensajes/base.html' %}
+
+{% block header_title %}Creacion de Mensaje{% endblock %}
+
+{% block header_description %}Para crear un mensaje por favor complete todos los campos{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Crear un Mensaje</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="{% url 'mensajes:index' %}" class="btn btn-secondary">Volver a la lista de mensajes</a>
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

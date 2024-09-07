@@ -1,0 +1,14 @@
+{% extends 'mensajes/base.html' %}
+
+{% block header_title %}Bienvenido a Tablero de Mensajes{% endblock %}
+
+{% block header_description %}Funcionalidades clave como la creacion, visualizacion y eliminacion de mensajes.{% endblock %}
+
+{% block content %}
+
+<div class="container text-center mt-5">
+    <a href="{% url 'mensajes:mensaje_list' %}" class="btn btn-primary btn-lg">Ver Mensajes</a>
+    <a href="{% url 'mensajes:mensaje_create' %}" class="btn btn-primary btn-lg">Crear un mensaje</a>
+</div>
+    
+{% endblock %}
