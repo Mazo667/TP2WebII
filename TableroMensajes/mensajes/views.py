@@ -11,8 +11,20 @@ def mensajeCreated(request):
 
 class MensajeListView(View):
     def get(self, request):
-        mensajes = Mensaje.objects.all()
+        usuario = request.GET.get('usuario', None)
+        
+        if usuario:
+            # Filtrar mensajes por remitente o destinatario
+            mensajes = Mensaje.objects.filter(remitente__icontains=usuario) | Mensaje.objects.filter(destinatario__icontains=usuario)
+        else:
+            mensajes = Mensaje.objects.all()  # Si no hay usuario, mostrar todos los mensajes
+
         return render(request, 'mensajes/mensaje_list.html', {'mensajes': mensajes})
+
+class MensajeDetailView(View):
+    def get(self,request,pk):
+        mensaje = get_object_or_404(Mensaje, pk=pk)
+        return render(request,'mensajes/mensaje_detail.html',{'mensaje':mensaje})
 
 class MensajeCreateView(View):
     def get(self, request):
