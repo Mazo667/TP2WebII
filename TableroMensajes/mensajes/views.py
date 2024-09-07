@@ -14,10 +14,9 @@ class MensajeListView(View):
         usuario = request.GET.get('usuario', None)
         
         if usuario:
-            # Filtrar mensajes por remitente o destinatario
             mensajes = Mensaje.objects.filter(remitente__icontains=usuario) | Mensaje.objects.filter(destinatario__icontains=usuario)
         else:
-            mensajes = Mensaje.objects.all()  # Si no hay usuario, mostrar todos los mensajes
+            mensajes = Mensaje.objects.all()
 
         return render(request, 'mensajes/mensaje_list.html', {'mensajes': mensajes})
 
