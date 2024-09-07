@@ -6,7 +6,7 @@ from .forms import MensajeForm
 def index(request):
     return render(request,'mensajes/index.html')
 
-def MensajeCreated(request):
+def mensajeCreated(request):
     return render(request,'mensajes/mensaje_created.html')
 
 class MensajeListView(View):
