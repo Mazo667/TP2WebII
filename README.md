@@ -1,5 +1,5 @@
 # TP2 PROGRAMACION WEB II
-<img src="https://repository-images.githubusercontent.com/853067853/5ee73326-8db2-4f39-b1a7-5456da0ab86d" alt="logo">
+<img src="https://repository-images.githubusercontent.com/853067853/dd71ff3a-6df4-4d84-b537-eff808cba4ec" alt="logo">
 
 [Informe realizado](InformeTP2WEBII.pdf)
 
