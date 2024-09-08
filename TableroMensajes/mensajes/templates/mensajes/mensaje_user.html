@@ -1,0 +1,117 @@
+{% extends 'mensajes/base.html' %}
+
+{% block header_title %}
+    {% if usuario == '' %}
+        Lista de Mensajes por usuario
+    {% else %}
+        Lista de Mensajes por {{ usuario }}
+    {% endif %}
+{% endblock %}
+
+{% block header_description %}
+    {% if usuario == '' %}
+        Aquí puedes ver los mensajes enviados y recibidos por un usuario
+    {% else %}
+        Aquí puedes ver los mensajes enviados y recibidos por {{ usuario }}.
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <form method="GET" action="{% url 'mensajes:mensaje_by_user' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="usuario" class="form-control" placeholder="Buscar por usuario, destinatario o remitente" aria-label="Buscar por usuario, destinatario o remitente">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <h1 class="text-center">
+        {% if usuario == '' %}
+            Mensajes Enviados por ...
+        {% else %}
+            Mensajes Enviados por {{ usuario }}
+        {% endif %} 
+    </h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Remitente</th>
+                <th>Destinatario</th>
+                <th>Mensaje</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mensaje in mensajes_enviados %}
+            <tr>
+                <td>{{ mensaje.remitente }}</td>
+                <td>{{ mensaje.destinatario }}</td>
+                <td>{{ mensaje.texto }}</td>
+                <td>{{ mensaje.fecha_hora|date:"d/m/Y" }}</td>
+                <td>{{ mensaje.fecha_hora|date:"H:i" }}</td>
+                <td>
+                    <form method="POST" action="{% url 'mensajes:mensaje_delete' mensaje.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No hay mensajes enviados disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1 class="text-center">
+        {% if usuario == '' %}
+            Mensajes Recibidos por ...
+        {% else %}
+            Mensajes Recibidos por {{ usuario }}
+        {% endif %} 
+    </h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Remitente</th>
+                <th>Destinatario</th>
+                <th>Mensaje</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mensaje in mensajes_recibidos %}
+            <tr>
+                <td>{{ mensaje.remitente }}</td>
+                <td>{{ mensaje.destinatario }}</td>
+                <td>{{ mensaje.texto }}</td>
+                <td>{{ mensaje.fecha_hora|date:"d/m/Y" }}</td>
+                <td>{{ mensaje.fecha_hora|date:"H:i" }}</td>
+                <td>
+                    <form method="POST" action="{% url 'mensajes:mensaje_delete' mensaje.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No hay mensajes recibidos disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'mensajes:mensaje_list' %}" class="btn btn-primary btn-lg">Volver</a>
+</div>
+{% endblock %}

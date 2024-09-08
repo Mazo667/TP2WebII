@@ -9,15 +9,21 @@ def index(request):
 def mensajeCreated(request):
     return render(request,'mensajes/mensaje_created.html')
 
-class MensajeListView(View):
+class MensajeListViewByUser(View):
     def get(self, request):
         usuario = request.GET.get('usuario', None)
         
         if usuario:
-            mensajes = Mensaje.objects.filter(remitente__icontains=usuario) | Mensaje.objects.filter(destinatario__icontains=usuario)
+            mensajes_enviados = Mensaje.objects.filter(remitente__icontains=usuario)
+            mensajes_recibidos = Mensaje.objects.filter(destinatario__icontains=usuario)
         else:
-            mensajes = Mensaje.objects.all()
+            return render(request, 'mensajes/mensaje_user.html', {'mensajes_enviados': [],'mensajes_recibidos': [], 'usuario': ''})
 
+        return render(request, 'mensajes/mensaje_user.html', {'mensajes_enviados': mensajes_enviados,'mensajes_recibidos': mensajes_recibidos, 'usuario':usuario})
+    
+class MensajeListView(View):
+    def get(self, request):
+        mensajes = Mensaje.objects.all()
         return render(request, 'mensajes/mensaje_list.html', {'mensajes': mensajes})
 
 class MensajeDetailView(View):

@@ -7,15 +7,6 @@
 {% block content %}
 <div class="container mt-5">
 
-    <form method="GET" action="{% url 'mensajes:mensaje_list' %}" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="usuario" class="form-control" placeholder="Buscar por usuario, destinatario o remitente" aria-label="Buscar por usuario, destinatario o remitente">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
-        </div>
-    </form>
-
     <h1 class="text-center">Mensajes</h1>
 
     <table class="table table-striped">
@@ -51,6 +42,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'mensajes:index' %}" class="btn btn-primary btn-lg">Volver</a>
+    <a href="{% url 'mensajes:index' %}" class="btn btn-primary btn-lg">Volver al menu principal</a>
+    <a href="{% url 'mensajes:mensaje_by_user' %}" class="btn btn-primary btn-lg">Buscar por usuario</a>
 </div>
 {% endblock %}
